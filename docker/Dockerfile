@@ -15,10 +15,11 @@ RUN apt-get update && apt-get install -y \
 RUN pip install --no-cache-dir poetry
 
 # Copy dependency files
-COPY pyproject.toml poetry.lock ./
+COPY pyproject.toml ./
 
-# Install dependencies
+# Generate lock file if it doesn't exist, then install dependencies
 RUN poetry config virtualenvs.create false && \
+    poetry lock --no-update && \
     poetry install --no-dev --no-interaction --no-ansi
 
 # Production stage
