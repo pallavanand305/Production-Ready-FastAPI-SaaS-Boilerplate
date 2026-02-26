@@ -17,10 +17,10 @@ RUN pip install --no-cache-dir poetry
 # Copy dependency files
 COPY pyproject.toml ./
 
-# Generate lock file if it doesn't exist, then install dependencies
+# Generate lock file and install dependencies
 RUN poetry config virtualenvs.create false && \
-    poetry lock --no-update && \
-    poetry install --no-dev --no-interaction --no-ansi
+    poetry lock && \
+    poetry install --only main --no-interaction --no-ansi
 
 # Production stage
 FROM python:3.11-slim
